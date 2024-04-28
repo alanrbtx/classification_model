@@ -9,7 +9,7 @@ import numpy as np
 import os
 import json
 from preprocess import PrepareDataset
-
+from dvclive import Live
 
 path_to_data = "../data/PetImages/"
 
@@ -47,40 +47,44 @@ class TestClass():
 
 
 if __name__=='__main__':
-    neigh.fit(x_train,y_train)
-    print("MODEL LOADED")
+    with Live() as live:
+        neigh.fit(x_train,y_train)
+        print("MODEL LOADED")
 
-    print("START TRAINING")
-    score_train = neigh.score(x_train, y_train)
-    print("Training score: {:.2f}%".format(score_train*100))
+        print("START TRAINING")
+        score_train = neigh.score(x_train, y_train)
+        print("Training score: {:.2f}%".format(score_train*100))
 
-    score_test = neigh.score(x_test, y_test)
-    print("Test score: {:.2f}%".format(score_test*100))
+        score_test = neigh.score(x_test, y_test)
+        print("Test score: {:.2f}%".format(score_test*100))
 
-    token = generate_exp_token()
-    os.mkdir(f"../experiments/exp_{token}")
+        live.log_metric(name="Training score", val=score_train)
+        live.log_metric(name="Test score", val=score_test)
 
-    # save pkl model
-    with open(f'../experiments/exp_{token}/neigh.pkl', 'wb') as knnPickle:
-        res = pickle.dump(neigh, knnPickle)
-        pkl_hash = res.__hash__()
-        print("MODEL SAVED")
+        token = generate_exp_token()
+        os.mkdir(f"../experiments/exp_{token}")
 
-     # save config
-    config = {
-        "n_neighbors": 5,
-        "path_to_data": path_to_data,
-        "model_type": "KNeighborsClassifier",
-        "pkl_hash": pkl_hash
-    }
+        # save pkl model
+        with open(f'../experiments/exp_{token}/neigh.pkl', 'wb') as knnPickle:
+            res = pickle.dump(neigh, knnPickle)
+            pkl_hash = res.__hash__()
+            print("MODEL SAVED")
 
-    with open(f"../experiments/exp_{token}/config.json", "w") as json_file:
-        json.dump(config, json_file)
+        # save config
+        config = {
+            "n_neighbors": 5,
+            "path_to_data": path_to_data,
+            "model_type": "KNeighborsClassifier",
+            "pkl_hash": pkl_hash
+        }
 
-    # save metrics
-    metrics = {
-        "score train": score_train, 
-        "score_test": score_test
-    }
-    with open(f"../experiments/exp_{token}/metrics.json", "w") as json_file:
-        json.dump(metrics, json_file)
+        with open(f"../experiments/exp_{token}/config.json", "w") as json_file:
+            json.dump(config, json_file)
+
+        # save metrics
+        metrics = {
+            "score train": score_train, 
+            "score_test": score_test
+        }
+        with open(f"../experiments/exp_{token}/metrics.json", "w") as json_file:
+            json.dump(metrics, json_file)
