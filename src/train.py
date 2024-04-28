@@ -5,17 +5,22 @@ from skimage.transform import resize
 from skimage.color import rgb2gray
 from sklearn.neighbors import KNeighborsClassifier
 import pickle
-
+import numpy as np
+import os
+import json
 from preprocess import PrepareDataset
 
-x_train, y_train = PrepareDataset("../data/PetImages/Cat/", "../data/PetImages/Dog/").preprocess_train()
-x_test, y_test = PrepareDataset("../data/PetImages/Cat/", "../data/PetImages/Dog/").preprocess_test()
+
+path_to_data = "../data/PetImages/"
+x_train, y_train = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_train()
+x_test, y_test = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_test()
 
 x_train = x_train.reshape(x_train.shape[0], -1)
 x_test = x_test.reshape(x_test.shape[0], -1)
 print("DATA PREPARED")
 
-neigh = KNeighborsClassifier(n_jobs=-1)
+neigh = KNeighborsClassifier(n_neighbors=5, n_jobs=-1)
+
 
 if __name__=='__main__':
     neigh.fit(x_train,y_train)
@@ -28,6 +33,38 @@ if __name__=='__main__':
     score_test = neigh.score(x_test, y_test)
     print("Test score: {:.2f}%".format(score_test*100))
 
-    with open('knnpickle_file', 'wb') as knnPickle:
-        pickle.dump(neigh, knnPickle)
+    def generate_exp_token():
+        token = np.random.randint(low=0, high=100, size=10)
+        str_token = ''
+        for i in token:
+            str_token += str(i)
+        return str_token
+
+    token = generate_exp_token()
+    os.mkdir(f"../experiments/exp_{token}")
+
+    # save pkl model
+    with open(f'../experiments/exp_{token}/neigh.pkl', 'wb') as knnPickle:
+        res = pickle.dump(neigh, knnPickle)
+        pkl_hash = res.__hash__()
         print("MODEL SAVED")
+
+     # save config
+    config = {
+        "n_neighbors": 5,
+        "path_to_data": path_to_data,
+        "model_type": "KNeighborsClassifier",
+        "pkl_hash": pkl_hash
+    }
+
+    with open(f"../experiments/exp_{token}/config.json", "w") as json_file:
+        json.dump(config, json_file)
+
+
+    # save metrics
+    metrics = {
+        "score train": score_train, 
+        "score_test": score_test
+    }
+    with open(f"../experiments/exp_{token}/metrics.json", "w") as json_file:
+        json.dump(metrics, json_file)
