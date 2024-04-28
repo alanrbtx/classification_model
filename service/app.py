@@ -19,11 +19,11 @@ def predict_image(file_path):
     neigh = load_pickle(pkl_path)
     res = neigh.predict(image)[0]
     if res == 0:
-        print("MODEL PREDICTION: Cat")
-        return {"res": "cat"}
+        print("MODEL PREDICTION: CAT")
+        return {"result": "cat"}
     else:
-        print("MODEL PREDICTION: Dog")
-        return {"res": "dog"}
+        print("MODEL PREDICTION: DOG")
+        return {"result": "dog"}
 
 app = Flask(__name__)
 
