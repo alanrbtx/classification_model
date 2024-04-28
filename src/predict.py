@@ -4,7 +4,14 @@ from skimage.transform import resize
 from skimage.color import rgb2gray
 
 
-neigh = pickle.load(open('../experiments/neigh.pkl', 'rb'))
+pkl_path = '../experiments/exp_404132797168783618/neigh.pkl'
+def load_pickle(file_path):
+    neigh = pickle.load(open(file_path, 'rb'))
+    return neigh
+
+# pytest
+def test_load_picke():
+    assert load_pickle('../experiments/exp_404132797168783618/neigh.pkl')
 
 def predict_image(file_path):
     image = io.imread(file_path)
@@ -13,6 +20,7 @@ def predict_image(file_path):
     image = rgb2gray(resize(image, (200,200)))
     image = image.reshape(1, -1)
 
+    neigh = load_pickle(pkl_path)
     res = neigh.predict(image)[0]
     if res == 0:
         print("Cat")
