@@ -12,14 +12,38 @@ from preprocess import PrepareDataset
 
 
 path_to_data = "../data/PetImages/"
-x_train, y_train = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_train()
-x_test, y_test = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_test()
 
-x_train = x_train.reshape(x_train.shape[0], -1)
-x_test = x_test.reshape(x_test.shape[0], -1)
-print("DATA PREPARED")
+def prepare_dataset(path_to_data):
+    x_train, y_train = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_train()
+    x_test, y_test = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_test()
+
+    x_train = x_train.reshape(x_train.shape[0], -1)
+    x_test = x_test.reshape(x_test.shape[0], -1)
+    print("DATA PREPARED")
+
+    return x_train, y_train, x_test, y_test
+
+x_train, y_train, x_test, y_test = prepare_dataset(path_to_data)
 
 neigh = KNeighborsClassifier(n_neighbors=5, n_jobs=-1)
+
+def generate_exp_token():
+        token = np.random.randint(low=0, high=100, size=10)
+        str_token = ''
+        for i in token:
+            str_token += str(i)
+        return str_token
+
+
+class TestClass():
+    def test_prepare_dataset(self):
+         assert prepare_dataset(path_to_data)
+
+    def test_model_initialization(self):
+         assert KNeighborsClassifier(n_neighbors=5, n_jobs=-1)
+
+    def test_generate_token(self):
+         assert generate_exp_token()
 
 
 if __name__=='__main__':
@@ -32,13 +56,6 @@ if __name__=='__main__':
 
     score_test = neigh.score(x_test, y_test)
     print("Test score: {:.2f}%".format(score_test*100))
-
-    def generate_exp_token():
-        token = np.random.randint(low=0, high=100, size=10)
-        str_token = ''
-        for i in token:
-            str_token += str(i)
-        return str_token
 
     token = generate_exp_token()
     os.mkdir(f"../experiments/exp_{token}")
@@ -59,7 +76,6 @@ if __name__=='__main__':
 
     with open(f"../experiments/exp_{token}/config.json", "w") as json_file:
         json.dump(config, json_file)
-
 
     # save metrics
     metrics = {
