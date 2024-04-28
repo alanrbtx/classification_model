@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
@@ -11,7 +10,7 @@ import json
 from preprocess import PrepareDataset
 from dvclive import Live
 
-path_to_data = "../data/PetImages/"
+path_to_data = "data/PetImages/"
 
 def prepare_dataset(path_to_data):
     x_train, y_train = PrepareDataset(path_to_data + "Cat/", path_to_data + "Dog/").preprocess_train()
@@ -62,10 +61,10 @@ if __name__=='__main__':
         live.log_metric(name="Test score", val=score_test)
 
         token = generate_exp_token()
-        os.mkdir(f"../experiments/exp_{token}")
+        os.mkdir(f"experiments/exp_{token}")
 
         # save pkl model
-        with open(f'../experiments/exp_{token}/neigh.pkl', 'wb') as knnPickle:
+        with open(f'experiments/exp_{token}/neigh.pkl', 'wb') as knnPickle:
             res = pickle.dump(neigh, knnPickle)
             pkl_hash = res.__hash__()
             print("MODEL SAVED")
@@ -78,7 +77,7 @@ if __name__=='__main__':
             "pkl_hash": pkl_hash
         }
 
-        with open(f"../experiments/exp_{token}/config.json", "w") as json_file:
+        with open(f"experiments/exp_{token}/config.json", "w") as json_file:
             json.dump(config, json_file)
 
         # save metrics
@@ -86,5 +85,5 @@ if __name__=='__main__':
             "score train": score_train, 
             "score_test": score_test
         }
-        with open(f"../experiments/exp_{token}/metrics.json", "w") as json_file:
+        with open(f"experiments/exp_{token}/metrics.json", "w") as json_file:
             json.dump(metrics, json_file)
