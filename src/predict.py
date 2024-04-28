@@ -4,7 +4,7 @@ from skimage.transform import resize
 from skimage.color import rgb2gray
 
 
-neigh = pickle.load(open('knnpickle_file', 'rb'))
+neigh = pickle.load(open('../experiments/neigh.pkl', 'rb'))
 
 def predict_image(file_path):
     image = io.imread(file_path)
