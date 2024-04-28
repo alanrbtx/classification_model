@@ -16,16 +16,18 @@ x_test = x_test.reshape(x_test.shape[0], -1)
 print("DATA PREPARED")
 
 neigh = KNeighborsClassifier(n_jobs=-1)
-neigh.fit(x_train,y_train)
-print("MODEL LOADED")
 
-print("START TRAINING")
-score_train = neigh.score(x_train, y_train)
-print("Training score: {:.2f}%".format(score_train*100))
+if __name__=='__main__':
+    neigh.fit(x_train,y_train)
+    print("MODEL LOADED")
 
-score_test = neigh.score(x_test, y_test)
-print("Test score: {:.2f}%".format(score_test*100))
+    print("START TRAINING")
+    score_train = neigh.score(x_train, y_train)
+    print("Training score: {:.2f}%".format(score_train*100))
 
-with open('knnpickle_file', 'wb') as knnPickle:
-    pickle.dump(neigh, knnPickle)
-    print("MODEL SAVED")
+    score_test = neigh.score(x_test, y_test)
+    print("Test score: {:.2f}%".format(score_test*100))
+
+    with open('knnpickle_file', 'wb') as knnPickle:
+        pickle.dump(neigh, knnPickle)
+        print("MODEL SAVED")
