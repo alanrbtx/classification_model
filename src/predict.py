@@ -19,4 +19,5 @@ def predict_image(file_path):
     else:
         print("Dog")
 
-predict_image("../data/PetImages/cat/3004.jpg")
+if __name__=='__main__':
+    predict_image("../data/PetImages/cat/3004.jpg")
