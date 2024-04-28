@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file, Response
+from flask import Flask, request
 import pickle
 from skimage import io
 from skimage.transform import resize
@@ -8,9 +8,6 @@ pkl_path = 'experiments/exp_25177033897488245161/neigh.pkl'
 def load_pickle(file_path):
     neigh = pickle.load(open(file_path, 'rb'))
     return neigh
-
-def test_load_picke():
-    assert load_pickle('experiments/exp_25177033897488245161/neigh.pkl')
 
 def predict_image(file_path):
     image = io.imread(file_path)
@@ -40,5 +37,14 @@ def get_real_result():
     res = predict_image(request.files["media"])
     return res
 
+
+class TestClass():
+    def test_load_picke(self):
+        assert load_pickle('experiments/exp_25177033897488245161/neigh.pkl')
+
+    def test_predict(self):
+        assert predict_image("data/PetImages/Cat/3004.jpg")
+
+    
 if __name__ == '__main__':
-    app.run(port=8000)
+    app.run(port=8000, host='0.0.0.0')
