@@ -34,8 +34,8 @@ services:
 #     user: postgres
 #     secrets:
 #       - db-password
-#     volumes:
-#        - /Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161/neigh.pkl:/neigh.pkl
+     volumes:
+        - /Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161:/classification
 #       - db-data:/var/lib/postgresql/data
 #     environment:
 #       - POSTGRES_DB=example
