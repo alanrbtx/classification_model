@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'alan1402/bigdata:0.1' }
+        docker { image 'python:3.9.6' }
     }
     stages {
         stage('Test') {
@@ -8,13 +8,11 @@ pipeline {
                 sh 'node --version'
             }
         }
-        stage('Build') {
+        stage('Docker Build') {
+            agent any
             steps {
                 sh 'docker build -t alan1402/bigdata:0.1 .'
-                sh 'node --version'
             }
         }
-        
-        
     }
 }
