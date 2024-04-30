@@ -1,14 +1,11 @@
 pipeline {
-    agent {
-        docker { image 'python:3.9.6' }
+  agent none
+  stages {
+    stage('Docker Build') {
+      agent any
+      steps {
+        sh 'docker build -t alan1402/bigdata:0.1 .'
+      }
     }
-    stages {
-        stage('Docker Build') {
-            agent any
-            steps {
-                sh 'cat Dockerfile'
-                sh 'docker build -t alan1402/bigdata:0.1 .'
-            }
-        }
-    }
+  }
 }
