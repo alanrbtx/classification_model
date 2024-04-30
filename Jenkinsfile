@@ -14,5 +14,11 @@ pipeline {
         sh 'docker push alan1402/bigdata:0.1'
       }
     }
+    stage('Deployment') {
+      agent any
+      steps {
+        sh 'docker compose up --build  '
+      }
+    }
   }
 }
