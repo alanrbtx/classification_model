@@ -40,10 +40,10 @@ def get_real_result():
 
 class TestClass():
     def test_load_picke(self):
-        assert load_pickle('/Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161/neigh.pkl')
+        assert load_pickle('/classification/neigh.pkl')
 
     def test_predict(self):
-        assert predict_image("data/PetImages/Cat/3004.jpg")
+        assert predict_image("/dataset/PetImages/Cat/3004.jpg")
 
     
 if __name__ == '__main__':
