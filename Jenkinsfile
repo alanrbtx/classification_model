@@ -6,6 +6,7 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
+                sh 'cat Dockerfile'
                 sh 'docker build -t alan1402/bigdata:0.1 .'
             }
         }
