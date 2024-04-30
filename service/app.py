@@ -4,7 +4,7 @@ from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
 
-pkl_path = '/neigh.pkl'
+pkl_path = '/Users/a.gazzaev/.jenkins/workspace/classification/neigh.pkl'
 def load_pickle(file_path):
     neigh = pickle.load(open(file_path, 'rb'))
     return neigh
