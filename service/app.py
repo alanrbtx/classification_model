@@ -4,7 +4,7 @@ from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
 
-pkl_path = 'experiments/exp_25177033897488245161/neigh.pkl'
+pkl_path = '/Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161/neigh.pkl'
 def load_pickle(file_path):
     neigh = pickle.load(open(file_path, 'rb'))
     return neigh
@@ -40,7 +40,7 @@ def get_real_result():
 
 class TestClass():
     def test_load_picke(self):
-        assert load_pickle('experiments/exp_25177033897488245161/neigh.pkl')
+        assert load_pickle('/Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161/neigh.pkl')
 
     def test_predict(self):
         assert predict_image("data/PetImages/Cat/3004.jpg")
