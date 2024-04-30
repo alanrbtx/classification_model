@@ -1,12 +1,7 @@
-pipeline {
-    agent {
-        docker { image 'node:20.11.1-alpine3.19' }
-    }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
+node {
+  git '…' // checks out Dockerfile & Makefile
+  def myEnv = docker.build 'my-environment:snapshot'
+  myEnv.inside {
+    sh 'make test'
+  }
 }
