@@ -1,10 +1,15 @@
-node {
+pipeline {
     agent {
-    label 'docker' 
-  }
-
-  def myEnv = docker.build 'my-environment:snapshot'
-  myEnv.inside {
-    sh 'make test'
-  }
+        label 'docker' 
+    }
+    agent {
+        docker { image 'node:20.11.1-alpine3.19' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
 }
