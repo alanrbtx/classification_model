@@ -9,6 +9,7 @@ import os
 import json
 from preprocess import PrepareDataset
 from dvclive import Live
+import configparser
 
 path_to_data = "data/PetImages/"
 
@@ -24,7 +25,13 @@ def prepare_dataset(path_to_data):
 
 x_train, y_train, x_test, y_test = prepare_dataset(path_to_data)
 
-neigh = KNeighborsClassifier(n_neighbors=5, n_jobs=-1)
+
+hyperparam_config = configparser.ConfigParser()
+hyperparam_config.read("../config.ini")
+
+# Access the values
+num_neighbors = hyperparam_config.get("hyperparam", "num_neighbors")
+neigh = KNeighborsClassifier(n_neighbors=num_neighbors, n_jobs=-1)
 
 def generate_exp_token():
         token = np.random.randint(low=0, high=100, size=10)
