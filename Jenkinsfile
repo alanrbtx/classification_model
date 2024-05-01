@@ -13,16 +13,17 @@ pipeline {
         sh 'docker push alan1402/bigdata:0.1'
       }
     }
-    stage('Deployment') {
+    stage('Deployment: test stage 1') {
       agent any
       steps {
-        sh 'docker compose up --build  '
+        sh 'docker compose up --build -d'
       }
     }
-    stage('Test') {
+    stage('Deployment: test stage 2') {
       agent any
       steps {
-        sh 'python3 -m pytest -q service/app.py'
+        sh 'python3 tests/test_api.py'
+        sh 'docker stop $(docker ps -a -q)'
       }
     }
   }
