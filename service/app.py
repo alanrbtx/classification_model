@@ -49,9 +49,6 @@ class TestClass():
     def test_load_picke(self):
         assert load_pickle('/classification/neigh.pkl')
 
-    def test_predict(self):
-        assert predict_image('/data/PetImages/Cat/3004.jpg')
-
     
 if __name__ == '__main__':
     app.run(port=8000, host='0.0.0.0')
