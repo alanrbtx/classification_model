@@ -3,10 +3,15 @@ import pickle
 from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 pkl_path = '/classification/neigh.pkl'
 def load_pickle(file_path):
     neigh = pickle.load(open(file_path, 'rb'))
+    logger.info("Модель успешно загружена из %s", file_path)
     return neigh
 
 def predict_image(file_path):
@@ -20,9 +25,11 @@ def predict_image(file_path):
     res = neigh.predict(image)[0]
     if res == 0:
         print("MODEL PREDICTION: CAT")
+        logger.info("Модель предсказала CAT")
         return {"result": "cat"}
     else:
         print("MODEL PREDICTION: DOG")
+        logger.info("Модель предсказала DOG")
         return {"result": "dog"}
 
 app = Flask(__name__)
