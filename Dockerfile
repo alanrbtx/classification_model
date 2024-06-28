@@ -20,12 +20,13 @@ ARG UID=10001
 # RUN --mount=type=cache,target=/root/.cache/pip \
 #     --mount=type=bind,source=requirements.txt,target=requirements.txt \
 #     python -m pip install -r requirements.txt
-COPY requirements.txt .
+COPY . .
+# COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 # USER appuser
 
-COPY . .
+# COPY . .
 
 EXPOSE 8000
 
