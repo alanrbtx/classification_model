@@ -7,4 +7,4 @@ services:
 
     volumes:
       - /Users/a.gazzaev/Desktop/classification_model/experiments:/classification
-      - /Users/a.gazzaev/Desktop/lab1/classification_model/data:/data
+      - /Users/a.gazzaev/Desktop/classification_model/data:/data
