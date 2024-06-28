@@ -4,6 +4,12 @@ from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
 import logging
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+host_model = os.getenv("HOST_EXPERIMENTS_PATH")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -47,7 +53,7 @@ def get_real_result():
 
 class TestClass():
     def test_load_picke(self):
-        assert load_pickle('/classification/neigh.pkl')
+        assert load_pickle(f'{host_model}/neigh.pkl')
 
     
 if __name__ == '__main__':
