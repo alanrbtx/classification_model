@@ -6,5 +6,7 @@ services:
       - 8000:8000
 
     volumes:
-      - /Users/a.gazzaev/Desktop/classification_model/experiments:/classification
-      - /Users/a.gazzaev/Desktop/classification_model/data:/data
+      # - /Users/a.gazzaev/Desktop/classification_model/experiments:/classification
+      # - /Users/a.gazzaev/Desktop/classification_model/data:/data
+       - ${HOST_EXPERIMENTS_PATH}:/classification
+       - ${HOST_DATA_PATH}:/data
