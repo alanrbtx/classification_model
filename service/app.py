@@ -50,7 +50,7 @@ class TestClass():
         assert load_pickle('/classification/neigh.pkl')
 
     def test_predict(self):
-        assert predict_image('/dataset/PetImages/Cat/3004.jpg')
+        assert predict_image('/data/PetImages/Cat/3004.jpg')
 
     
 if __name__ == '__main__':

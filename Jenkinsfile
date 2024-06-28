@@ -23,6 +23,7 @@ pipeline {
       agent any
       steps {
         sh 'python3 tests/test_api.py'
+        sh 'pytest service/app.py'
         sh 'docker stop $(docker ps -a -q)'
       }
     }
